@@ -67,7 +67,7 @@ public class RewardServiceImpl implements RewardService {
         }
 
         if (transactions.isEmpty()) {
-            throw new RewardException("Service.NO_TRANSACTION");
+            throw new RewardException("Service.NO_TRANSACTION_FOUND");
         }
 
         Map<String, Integer> monthlyRewards = new HashMap<>();
