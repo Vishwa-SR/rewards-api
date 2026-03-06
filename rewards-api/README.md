@@ -189,16 +189,6 @@ spring.datasource.password=root
 
 ---
 
-## 🎯 Key Highlights
-
-- Clean layered architecture  
-- Proper validation handling  
-- Centralized exception handling  
-- Industry-standard logging  
-- Production-style API design  
-
----
-
-## 📌 Author
+  
 
 Developed as part of Spring Boot backend learning
