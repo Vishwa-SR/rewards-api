@@ -106,7 +106,7 @@ GET http://localhost:8765/rewards/1?startDate=2026-01-01&endDate=2026-03-01
 | No transactions found | NO_TRANSACTION error |
 | Invalid month (>12) | Validation error |
 | Invalid date range | INVALID_DATE error |
-| Both month + date params | INVALID_MONTH error |
+| Both month + date params | INVALID_PARAMS error |
 
 ---
 
@@ -166,10 +166,14 @@ Unit testing implemented using:
 
 ### MySQL Setup
 
-Create database:
+### ▶️ Initialize Tables
 
-CREATE DATABASE rewards_db;
-Update application.properties:
+Database schema and sample data scripts are available in:
+
+src/main/resources
+👉 Run the SQL scripts from the resources folder to create tables and insert sample data.
+
+ application.properties:
 
 spring.datasource.url=jdbc:mysql://localhost:3306/rewards_db
 spring.datasource.username=root
@@ -197,4 +201,4 @@ spring.datasource.password=root
 
 ## 📌 Author
 
-Developed as part of Spring Boot backend learning and internal project interview preparation.
+Developed as part of Spring Boot backend learning
