@@ -17,7 +17,7 @@ This project demonstrates:
 
 ---
 
-## 🚀 Tech Stack
+##  Tech Stack
 
 - Java 17  
 - Spring Boot  
@@ -32,7 +32,7 @@ This project demonstrates:
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 com.rewards.api
  ├── controller        → REST controllers  
@@ -43,7 +43,7 @@ com.rewards.api
  ├── exception         → custom exceptions + handler  
 ---
 
-## ⚙️ Business Logic
+## Business Logic
 
 Reward points are calculated based on transaction amount:
 
@@ -60,12 +60,12 @@ The API calculates:
 
 ## 🔌 API Endpoint
 
-### ✅ Get Rewards
+### Get Rewards
 
 GET /rewards/{customerId}
 ---
 
-## 📌 Query Parameters (Optional)
+##  Query Parameters (Optional)
 
 | Parameter | Description |
 |-----------|-------------|
@@ -75,16 +75,16 @@ GET /rewards/{customerId}
 
 ---
 
-## 📬 Example Requests (Postman)
+##  Example Requests (Postman)
 
-### 🔹 Default (Last 3 Months)
+###  Default (Last 3 Months)
 
 GET http://localhost:8765/rewards/1
 👉 Fetches rewards for last 3 months automatically.
 
 ---
 
-### 🔹 By Months
+###  By Months
 
 GET http://localhost:8765/rewards/1?months=2
 👉 Fetches rewards for last 2 months.
@@ -98,7 +98,7 @@ GET http://localhost:8765/rewards/1?startDate=2026-01-01&endDate=2026-03-01
 
 ---
 
-## ❌ Validation Cases
+##  Validation Cases
 
 | Scenario | Result |
 |----------|--------|
@@ -110,7 +110,7 @@ GET http://localhost:8765/rewards/1?startDate=2026-01-01&endDate=2026-03-01
 
 ---
 
-## ⚠️ Error Handling
+##  Error Handling
 
 Implemented using:
 
@@ -126,7 +126,7 @@ Example response:
 }
 ---
 
-## 📊 Logging
+## Logging
 
 Logging implemented using:
 
@@ -144,7 +144,7 @@ Log file:
 log/ErrorLog.log
 ---
 
-## 🧪 Testing
+##  Testing
 
 Unit testing implemented using:
 
@@ -162,11 +162,11 @@ Unit testing implemented using:
 
 ---
 
-## 🗄️ Database Setup
+##  Database Setup
 
 ### MySQL Setup
 
-### ▶️ Initialize Tables
+## Initialize Tables
 
 Database schema and sample data scripts are available in:
 
@@ -180,7 +180,7 @@ spring.datasource.username=root
 spring.datasource.password=root
 ---
 
-## ▶️ How to Run
+##  How to Run
 
 1. Clone repository  
 2. Configure MySQL database  
@@ -189,16 +189,8 @@ spring.datasource.password=root
 
 ---
 
-## 🎯 Key Highlights
 
-- Clean layered architecture  
-- Proper validation handling  
-- Centralized exception handling  
-- Industry-standard logging  
-- Production-style API design  
 
----
 
-## 📌 Author
 
 Developed as part of Spring Boot backend learning
