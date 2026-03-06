@@ -80,21 +80,21 @@ GET /rewards/{customerId}
 ### 🔹 Default (Last 3 Months)
 
 GET http://localhost:8765/rewards/1
-👉 Fetches rewards for last 3 months automatically.
+  Fetches rewards for last 3 months automatically.
 
 ---
 
 ### 🔹 By Months
 
 GET http://localhost:8765/rewards/1?months=2
-👉 Fetches rewards for last 2 months.
+  Fetches rewards for last 2 months.
 
 ---
 
 ### 🔹 By Date Range
 
 GET http://localhost:8765/rewards/1?startDate=2026-01-01&endDate=2026-03-01
-👉 Fetches rewards between selected dates.
+  Fetches rewards between selected dates.
 
 ---
 
@@ -168,16 +168,15 @@ Unit testing implemented using:
 
 ### 📌 Initialize Tables
 
-Database schema and sample data scripts are available in:
+   Database schema and sample data scripts are available in:  src/main/resources
 
-src/main/resources
-👉 Run the SQL scripts from the resources folder to create tables and insert sample data.
+   Run the SQL scripts from the resources folder to create tables and insert sample data.
 
  application.properties:
 
-spring.datasource.url=jdbc:mysql://localhost:3306/rewards_db
-spring.datasource.username=root
-spring.datasource.password=root
+  spring.datasource.url=jdbc:mysql://localhost:3306/rewards_db
+  spring.datasource.username=root
+  spring.datasource.password=root
 ---
 
 ## 📌 How to Run
