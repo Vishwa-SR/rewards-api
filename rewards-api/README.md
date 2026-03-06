@@ -141,8 +141,8 @@ Logs capture:
 - Validation failures  
 
 Log file:
+- Log/ErrorLog.log
 
-log/ErrorLog.log
 ---
 
 ## 📌 Testing
