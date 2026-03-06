@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.rewards.api.controller.RewardController;
+import com.rewards.api.dto.RewardResponse;
 import com.rewards.api.exception.RewardException;
 import com.rewards.api.service.RewardService;
 
@@ -84,5 +85,23 @@ class RewardsApplicationTests {
                         Matchers.is("Start date should be before EndDate")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.errorCode",
                         Matchers.is(404)));
+    }
+    
+    @Test
+    void SuccessTest() throws Exception {
+
+        RewardResponse response = new RewardResponse();
+        response.setCustomerId(1);
+        response.setCustomername("Vishwa");
+        response.setTotalRewards(120);
+
+        Mockito.when(rewardService.calculateRewards(1, null, null, null))
+                .thenReturn(response);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/rewards/{customerId}", 1))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.customerId").value(1))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.customername").value("Vishwa"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.totalRewards").value(120));
     }
 }

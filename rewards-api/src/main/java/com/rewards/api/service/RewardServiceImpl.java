@@ -34,14 +34,14 @@ public class RewardServiceImpl implements RewardService {
                 .orElseThrow(() -> new RewardException("Service.CUSTOMER_NOT_FOUND"));
 
         List<Transactions> transactions = new ArrayList<>();
-
-        if (months != null && startDate == null && endDate == null) {
+         if(months != null && startDate != null && endDate != null) {
+        	throw new RewardException("Service.INVALID_PARAMS");
+        }
+         else if (months != null && startDate == null && endDate == null) {
            if(months>12 || months<1) {
         	throw new RewardException("Service.INVALID_MONTH");
            }
-
-      
-            transactions = transactionRepository
+                    transactions = transactionRepository
                     .findByCustomerCustomerIdAndTransactionDateBetween(
                             customerId,
                             LocalDate.now().minusMonths(months),
@@ -58,7 +58,7 @@ public class RewardServiceImpl implements RewardService {
                     .findByCustomerCustomerIdAndTransactionDateBetween(
                             customerId, startDate, endDate);
         }
-
+       
         else {
             transactions = transactionRepository
                     .findByCustomerCustomerIdAndTransactionDateBetween(
