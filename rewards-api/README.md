@@ -35,12 +35,13 @@ This project demonstrates:
 ##  📌 Project Structure
 
 com.rewards.api
+
  ├── controller        → REST controllers  
  ├── service           → business logic implementation  
  ├── repository        → database access layer  
  ├── entity            → JPA entities  
  ├── dto               → response models  
- ├── exception         → custom exceptions + handler  
+ ├── exception         → custom exceptions 
 ---
 
 ## 📌 Business Logic
