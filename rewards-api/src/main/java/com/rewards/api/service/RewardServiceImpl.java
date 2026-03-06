@@ -35,11 +35,12 @@ public class RewardServiceImpl implements RewardService {
 
         List<Transactions> transactions = new ArrayList<>();
 
-        if (months != null && startDate != null && endDate != null) {
-            throw new RewardException("Service.INVALID_MONTH");
-        }
+        if (months != null && startDate == null && endDate == null) {
+           if(months>12 || months<1) {
+        	throw new RewardException("Service.INVALID_MONTH");
+           }
 
-        if (months != null) {
+      
             transactions = transactionRepository
                     .findByCustomerCustomerIdAndTransactionDateBetween(
                             customerId,
