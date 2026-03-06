@@ -168,15 +168,15 @@ Unit testing implemented using:
 
 ### 📌 Initialize Tables
 
-Database schema and sample data scripts are available in: ### src/main/resources
+   Database schema and sample data scripts are available in:  src/main/resources
 
-Run the SQL scripts from the resources folder to create tables and insert sample data.
+   Run the SQL scripts from the resources folder to create tables and insert sample data.
 
  application.properties:
 
-spring.datasource.url=jdbc:mysql://localhost:3306/rewards_db
-spring.datasource.username=root
-spring.datasource.password=root
+  spring.datasource.url=jdbc:mysql://localhost:3306/rewards_db
+  spring.datasource.username=root
+  spring.datasource.password=root
 ---
 
 ## 📌 How to Run
