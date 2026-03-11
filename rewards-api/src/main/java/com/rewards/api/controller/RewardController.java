@@ -13,29 +13,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.rewards.api.dto.RewardResponse;
 import com.rewards.api.exception.RewardException;
-import com.rewards.api.service.RewardService;
+import com.rewards.api.service.RewardServiceImpl;
 
 @RestController
 @RequestMapping("/rewards")
 public class RewardController {
 
-    @Autowired
-    private RewardService rewardService;
+	@Autowired
+	private RewardServiceImpl rewardService;
 
-    @GetMapping("/{customerId}")
-    public ResponseEntity<RewardResponse> getRewardsForCustomer(
+	@GetMapping("/{customerId}")
+	public ResponseEntity<RewardResponse> getRewardsForCustomer(@PathVariable int customerId,
+			@RequestParam(required = false) Integer months, 
+			@RequestParam(required = false) LocalDate startDate,
+			@RequestParam(required = false) LocalDate endDate) throws RewardException {
 
-            @PathVariable int customerId,
+		RewardResponse response = rewardService.calculateRewards(customerId, months, startDate, endDate);
 
-            @RequestParam(required = false) Integer months,
-            @RequestParam(required = false) LocalDate startDate,
-            @RequestParam(required = false) LocalDate endDate
-
-    ) throws RewardException {
-
-        RewardResponse response =
-                rewardService.calculateRewards(customerId, months, startDate, endDate);
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
 }

@@ -4,31 +4,40 @@ import java.time.LocalDateTime;
 
 public class ErrorInfo {
 
-    private String errorMessage;
-    private Integer errorCode;
-    private LocalDateTime timestamp;
+	private String errorMessage;
+	private Integer errorCode;
+	private LocalDateTime timestamp;
 
-    public String getErrorMessage() {
-        return errorMessage;
-    }
+	public ErrorInfo() {
+	}
 
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
-    }
+	public ErrorInfo(String errorMessage, Integer errorCode, LocalDateTime timestamp) {
+		this.errorMessage = errorMessage;
+		this.errorCode = errorCode;
+		this.timestamp = timestamp;
+	}
 
-    public Integer getErrorCode() {
-        return errorCode;
-    }
+	public String getErrorMessage() {
+		return errorMessage;
+	}
 
-    public void setErrorCode(Integer errorCode) {
-        this.errorCode = errorCode;
-    }
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
 
-    public LocalDateTime getTimestamp() {
-        return timestamp;
-    }
+	public Integer getErrorCode() {
+		return errorCode;
+	}
 
-    public void setTimestamp(LocalDateTime timestamp) {
-        this.timestamp = timestamp;
-    }
+	public void setErrorCode(Integer errorCode) {
+		this.errorCode = errorCode;
+	}
+
+	public LocalDateTime getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(LocalDateTime timestamp) {
+		this.timestamp = timestamp;
+	}
 }

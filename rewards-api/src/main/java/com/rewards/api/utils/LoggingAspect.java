@@ -11,18 +11,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class LoggingAspect {
 
-    public static final Logger LOGGER =
-            LogManager.getLogger(LoggingAspect.class);
+	public static final Logger LOGGER = LogManager.getLogger(LoggingAspect.class);
 
-    @Before("execution(* com.rewards.api.service.*Impl.*(..))")
-    public void logBefore() {
-        LOGGER.info("Entering method");
-    }
+	@Before("execution(* com.rewards.api.service.*Impl.*(..))")
+	public void logBefore() {
+		LOGGER.info("Entering service method");
+	}
 
-    @AfterThrowing(pointcut = "execution(* com.rewards.api.service.*Impl.*(..))",
-            throwing = "exception")
-    public void logServiceException(Exception exception) {
-
-        LOGGER.error(exception.getMessage(), exception);
-    }
+	@AfterThrowing(pointcut = "execution(* com.rewards.api.service.*Impl.*(..))", throwing = "exception")
+	public void logServiceException(Exception exception) {
+		LOGGER.error("Exception occurred: {}", exception.getMessage(), exception);
+	}
 }

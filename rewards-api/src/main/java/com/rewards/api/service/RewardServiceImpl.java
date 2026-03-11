@@ -1,7 +1,6 @@
 package com.rewards.api.service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,101 +11,95 @@ import org.springframework.stereotype.Service;
 import com.rewards.api.dto.RewardResponse;
 import com.rewards.api.entity.Customer;
 import com.rewards.api.entity.Transactions;
+import com.rewards.api.exception.ErrorCode;
 import com.rewards.api.exception.RewardException;
 import com.rewards.api.repository.CustomerRepository;
 import com.rewards.api.repository.TransactionRepository;
 
 @Service
-public class RewardServiceImpl implements RewardService {
+public class RewardServiceImpl {
 
-    @Autowired
-    private TransactionRepository transactionRepository;
+	@Autowired
+	private TransactionRepository transactionRepository;
 
-    @Autowired
-    private CustomerRepository customerRepository;
+	@Autowired
+	private CustomerRepository customerRepository;
 
-    @Override
-    public RewardResponse calculateRewards(int customerId, Integer months,
-                                           LocalDate startDate, LocalDate endDate)
-            throws RewardException {
+	public RewardResponse calculateRewards(int customerId, Integer months, LocalDate startDate, LocalDate endDate)
+			throws RewardException {
 
-        Customer customer = customerRepository.findById(customerId)
-                .orElseThrow(() -> new RewardException("Service.CUSTOMER_NOT_FOUND"));
+		Customer customer = customerRepository.findById(customerId)
+				.orElseThrow(() -> new RewardException(ErrorCode.CUSTOMER_NOT_FOUND));
 
-        List<Transactions> transactions = new ArrayList<>();
-         if(months != null && startDate != null && endDate != null) {
-        	throw new RewardException("Service.INVALID_PARAMS");
-        }
-         else if (months != null && startDate == null && endDate == null) {
-           if(months>12 || months<1) {
-        	throw new RewardException("Service.INVALID_MONTH");
-           }
-                    transactions = transactionRepository
-                    .findByCustomerCustomerIdAndTransactionDateBetween(
-                            customerId,
-                            LocalDate.now().minusMonths(months),
-                            LocalDate.now());
-        }
+		validateInput(months, startDate, endDate);
 
-        else if (months == null && startDate != null && endDate != null) {
+		LocalDate[] range = determineDateRange(months, startDate, endDate);
 
-            if (startDate.isAfter(endDate)) {
-                throw new RewardException("Service.INVALID_DATE");
-            }
+		List<Transactions> transactions = transactionRepository
+				.findByCustomerCustomerIdAndTransactionDateBetween(customerId, range[0], range[1]);
 
-            transactions = transactionRepository
-                    .findByCustomerCustomerIdAndTransactionDateBetween(
-                            customerId, startDate, endDate);
-        }
-       
-        else {
-            transactions = transactionRepository
-                    .findByCustomerCustomerIdAndTransactionDateBetween(
-                            customerId,
-                            LocalDate.now().minusMonths(3),
-                            LocalDate.now());
-        }
+		if (transactions.isEmpty()) {
+			throw new RewardException(ErrorCode.NO_TRANSACTION_FOUND);
+		}
 
-        if (transactions.isEmpty()) {
-            throw new RewardException("Service.NO_TRANSACTION_FOUND");
-        }
+		Map<String, Integer> monthlyRewards = new HashMap<>();
+		int totalPoints = 0;
 
-        Map<String, Integer> monthlyRewards = new HashMap<>();
-        int totalPoints = 0;
+		for (Transactions t : transactions) {
 
-        for (Transactions transaction : transactions) {
+			int points = calculatePoints(t.getAmount());
 
-            int points = calculatePoints(transaction.getAmount());
+			String month = t.getTransactionDate().getMonth().toString();
 
-            String month = transaction.getTransactionDate().getMonth().toString();
+			monthlyRewards.put(month, monthlyRewards.getOrDefault(month, 0) + points);
 
-            monthlyRewards.put(month,
-                    monthlyRewards.getOrDefault(month, 0) + points);
+			totalPoints += points;
+		}
 
-            totalPoints += points;
-        }
+		return new RewardResponse(customerId, customer.getCustomerName(), monthlyRewards, totalPoints);
+	}
 
-        return new RewardResponse(
-                customerId,
-                customer.getCustomerName(),
-                monthlyRewards,
-                totalPoints
-        );
-    }
+	private void validateInput(Integer months, LocalDate startDate, LocalDate endDate) throws RewardException {
 
-    private int calculatePoints(double amount) {
+		if (months != null && startDate != null && endDate != null) {
+			throw new RewardException(ErrorCode.INVALID_PARAMS);
+		}
 
-        int points = 0;
+		if (months != null && (months < 1 || months > 12)) {
+			throw new RewardException(ErrorCode.INVALID_MONTH);
+		}
 
-        if (amount > 100) {
-            points += (amount - 100) * 2;
-            points += 50;
-        }
+		if (startDate != null && endDate != null && startDate.isAfter(endDate)) {
+			throw new RewardException(ErrorCode.INVALID_DATE);
+		}
+	}
 
-        else if(amount>50) {
-            points += (int) (amount - 50);
-        }
+	private LocalDate[] determineDateRange(Integer months, LocalDate startDate, LocalDate endDate) {
 
-        return points;
-    }
+		if (months != null) {
+			LocalDate end = LocalDate.now();
+			LocalDate start = end.minusMonths(months);
+			return new LocalDate[] { start, end };
+		}
+
+		if (startDate != null && endDate != null) {
+			return new LocalDate[] { startDate, endDate };
+		}
+
+		LocalDate end = LocalDate.now();
+		LocalDate start = end.minusMonths(3);
+
+		return new LocalDate[] { start, end };
+	}
+
+	private int calculatePoints(double amount) {
+
+		if (amount <= 50)
+			return 0;
+
+		if (amount <= 100)
+			return (int) (amount - 50);
+
+		return (int) ((amount - 100) * 2 + 50);
+	}
 }
