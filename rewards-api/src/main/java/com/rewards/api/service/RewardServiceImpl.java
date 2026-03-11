@@ -1,7 +1,7 @@
 package com.rewards.api.service;
 
 import java.time.LocalDate;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -42,7 +42,7 @@ public class RewardServiceImpl {
 			throw new RewardException(ErrorCode.NO_TRANSACTION_FOUND);
 		}
 
-		Map<String, Integer> monthlyRewards = new HashMap<>();
+		Map<String, Integer> monthlyRewards = new LinkedHashMap<>();
 		int totalPoints = 0;
 
 		for (Transactions t : transactions) {
