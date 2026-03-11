@@ -21,7 +21,7 @@ import com.rewards.api.exception.RewardException;
 import com.rewards.api.service.RewardServiceImpl;
 
 @WebMvcTest(RewardController.class)
-class RewardsApplicationTests {
+class RewardsControllerTests {
 	@Autowired
 	private MockMvc mockMvc;
 
@@ -79,13 +79,13 @@ class RewardsApplicationTests {
 
 		RewardResponse response = new RewardResponse();
 		response.setCustomerId(1);
-		response.setCustomername("Vishwa");
+		response.setCustomerName("Vishwa");
 		response.setTotalRewards(120);
 
 		Mockito.when(rewardService.calculateRewards(1, null, null, null)).thenReturn(response);
 
 		mockMvc.perform(get("/rewards/{customerId}", 1)).andExpect(status().isOk())
-				.andExpect(jsonPath("$.customerId").value(1)).andExpect(jsonPath("$.customername").value("Vishwa"))
+				.andExpect(jsonPath("$.customerId").value(1)).andExpect(jsonPath("$.customerName").value("Vishwa"))
 				.andExpect(jsonPath("$.totalRewards").value(120));
 	}
 }

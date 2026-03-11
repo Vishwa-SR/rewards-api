@@ -2,21 +2,15 @@ package com.rewards.api;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.when;
-
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Optional;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.autoconfigure.pulsar.PulsarProperties.Transaction;
-
+import static org.mockito.Mockito.*;
 import com.rewards.api.dto.RewardResponse;
 import com.rewards.api.entity.Customer;
 import com.rewards.api.entity.Transactions;
@@ -27,7 +21,7 @@ import com.rewards.api.repository.TransactionRepository;
 import com.rewards.api.service.RewardServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
-class RewardServiceImplTest {
+class RewardsServiceImplTests {
 	@Mock
 	private TransactionRepository transactionRepository;
 	@Mock
@@ -60,7 +54,7 @@ class RewardServiceImplTest {
 	}
 
 	@Test
-	void noTransactionfoundTest() {
+	void noTransactionFoundTest() {
 		when(customerRepository.findById(1)).thenReturn(Optional.of(new Customer()));
 		when(transactionRepository.findByCustomerCustomerIdAndTransactionDateBetween(anyInt(), any(), any()))
 				.thenReturn(Arrays.asList());
@@ -82,7 +76,7 @@ class RewardServiceImplTest {
 				.thenReturn(Arrays.asList(t1));
 		RewardResponse response = rewardService.calculateRewards(1, null, null, null);
 		assertEquals(1, response.getCustomerId());
-		assertEquals("Vishwa", response.getCustomername());
+		assertEquals("Vishwa", response.getCustomerName());
 		assertEquals(90, response.getTotalRewards());
 	}
 }
