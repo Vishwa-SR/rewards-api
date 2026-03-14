@@ -2,16 +2,16 @@ package com.rewards.api.utils;
 
 import java.time.LocalDateTime;
 
-public class ErrorInfo {
+public class ErrorResponse {
 
 	private String errorMessage;
 	private Integer errorCode;
 	private LocalDateTime timestamp;
 
-	public ErrorInfo() {
+	public ErrorResponse() {
 	}
 
-	public ErrorInfo(String errorMessage, Integer errorCode, LocalDateTime timestamp) {
+	public ErrorResponse(String errorMessage, Integer errorCode, LocalDateTime timestamp) {
 		this.errorMessage = errorMessage;
 		this.errorCode = errorCode;
 		this.timestamp = timestamp;
