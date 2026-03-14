@@ -32,7 +32,7 @@ public class RewardServiceImpl {
 		Customer customer = customerRepository.findById(customerId)
 				.orElseThrow(() -> new RewardException(ErrorCode.CUSTOMER_NOT_FOUND));
 
-		validateInput(months, startDate, endDate);
+	
 
 		LocalDate[] range = determineDateRange(months, startDate, endDate);
 
@@ -43,16 +43,16 @@ public class RewardServiceImpl {
 			throw new RewardException(ErrorCode.NO_TRANSACTION_FOUND);
 		}
 
-		Map<String, Integer> monthlyRewards = new LinkedHashMap<>();
-		int totalPoints = 0;
+		Map<String, Double> monthlyRewards = new LinkedHashMap<>();
+		double totalPoints = 0;
 
 		for (Transactions t : transactions) {
 
-			int points = calculatePoints(t.getAmount());
+			double points = calculatePoints(t.getAmount());
 
 			String month = t.getTransactionDate().format(DateTimeFormatter.ofPattern("MMM-yyyy"));
 
-			monthlyRewards.put(month, monthlyRewards.getOrDefault(month, 0) + points);
+			monthlyRewards.put(month, monthlyRewards.getOrDefault(month, 0.0) + points);
 
 			totalPoints += points;
 		}
@@ -75,8 +75,8 @@ public class RewardServiceImpl {
 		}
 	}
 
-	private LocalDate[] determineDateRange(Integer months, LocalDate startDate, LocalDate endDate) {
-
+	private LocalDate[] determineDateRange(Integer months, LocalDate startDate, LocalDate endDate) throws RewardException {
+		validateInput(months, startDate, endDate);
 		if (months != null) {
 			LocalDate end = LocalDate.now();
 			LocalDate start = end.minusMonths(months);
@@ -93,7 +93,7 @@ public class RewardServiceImpl {
 		return new LocalDate[] { start, end };
 	}
 
-	private int calculatePoints(double amount) {
+	private double calculatePoints(double amount) {
 
 		if (amount <= 50)
 			return 0;
@@ -101,6 +101,6 @@ public class RewardServiceImpl {
 		if (amount <= 100)
 			return (int) (amount - 50);
 
-		return (int) ((amount - 100) * 2 + 50);
+		return  ((amount - 100) * 2 + 50);
 	}
 }

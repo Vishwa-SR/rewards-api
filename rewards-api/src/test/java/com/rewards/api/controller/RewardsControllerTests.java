@@ -81,12 +81,12 @@ class RewardsControllerTests {
 		RewardResponse response = new RewardResponse();
 		response.setCustomerId(1);
 		response.setCustomerName("Vishwa");
-		response.setTotalRewards(120);
+		response.setTotalRewards(120.0);
 
 		Mockito.when(rewardService.calculateRewards(1, null, null, null)).thenReturn(response);
 
 		mockMvc.perform(get("/rewards/{customerId}", 1)).andExpect(status().isOk())
 				.andExpect(jsonPath("$.customerId").value(1)).andExpect(jsonPath("$.customerName").value("Vishwa"))
-				.andExpect(jsonPath("$.totalRewards").value(120));
+				.andExpect(jsonPath("$.totalRewards").value(120.0));
 	}
 }

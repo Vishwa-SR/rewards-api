@@ -6,13 +6,13 @@ public class RewardResponse {
 
 	private int customerId;
 	private String customerName;
-	private Map<String, Integer> monthlyRewards;
-	private int totalRewards;
+	private Map<String, Double> monthlyRewards;
+	private double totalRewards;
 
 	public RewardResponse() {
 	}
 
-	public RewardResponse(int customerId, String customername, Map<String, Integer> monthlyRewards, int totalRewards) {
+	public RewardResponse(int customerId, String customername, Map<String, Double> monthlyRewards, double totalRewards) {
 
 		super();
 		this.customerId = customerId;
@@ -37,19 +37,19 @@ public class RewardResponse {
 		this.customerName = customername;
 	}
 
-	public Map<String, Integer> getMonthlyRewards() {
+	public Map<String, Double> getMonthlyRewards() {
 		return monthlyRewards;
 	}
 
-	public void setMonthlyRewards(Map<String, Integer> monthlyRewards) {
+	public void setMonthlyRewards(Map<String, Double> monthlyRewards) {
 		this.monthlyRewards = monthlyRewards;
 	}
 
-	public int getTotalRewards() {
+	public double getTotalRewards() {
 		return totalRewards;
 	}
 
-	public void setTotalRewards(int totalRewards) {
+	public void setTotalRewards(double totalRewards) {
 		this.totalRewards = totalRewards;
 	}
 }

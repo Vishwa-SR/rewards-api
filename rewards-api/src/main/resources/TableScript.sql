@@ -9,8 +9,7 @@ drop table if exists customer_transaction;
 
 create table customer(
     customer_id int auto_increment primary key,
-    customer_name varchar(100) not null,
-    email varchar(100)
+    customer_name varchar(100) not null
 );
 
 create table customer_transaction(
@@ -21,15 +20,14 @@ create table customer_transaction(
     foreign key(customer_id) references customer(customer_id)
 );
 
-insert into customer(customer_name,email) values
-('Vishwa','vishwa123@gmail.com'),
-('chandru','chandru123@gmail.com'),
-('arun','arun123@gmail.com'),
-('karthik','karthik123@gmail.com'),
-('rahul','rahul123@gmail.com');
+insert into customer(customer_name) values
+('Vishwa'),
+('chandru'),
+('arun'),
+('karthik'),
+('rahul');
 
 insert into customer_transaction(customer_id,amount,transaction_date) values
-
 
 (1,120.50,'2025-01-02'),
 (2,75.20,'2025-01-04'),
@@ -42,7 +40,6 @@ insert into customer_transaction(customer_id,amount,transaction_date) values
 (4,165.90,'2025-01-23'),
 (5,220.10,'2025-01-27'),
 
-
 (1,150.00,'2025-02-01'),
 (2,99.80,'2025-02-03'),
 (3,178.60,'2025-02-06'),
@@ -53,7 +50,6 @@ insert into customer_transaction(customer_id,amount,transaction_date) values
 (3,140.00,'2025-02-19'),
 (4,300.50,'2025-02-23'),
 (5,190.90,'2025-02-26'),
-
 
 (1,205.60,'2026-01-03'),
 (2,118.40,'2026-01-05'),
@@ -76,5 +72,6 @@ insert into customer_transaction(customer_id,amount,transaction_date) values
 (3,175.45,'2026-02-21'),
 (4,260.80,'2026-02-24'),
 (5,199.99,'2026-02-27');
+
 select * from customer;
 select * from customer_transaction;

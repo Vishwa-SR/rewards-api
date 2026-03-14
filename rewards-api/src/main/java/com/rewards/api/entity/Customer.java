@@ -19,9 +19,7 @@ public class Customer {
 	@Column
 	private String customerName;
 
-	@Column
-	private String email;
-
+	
 	public int getCustomerId() {
 		return customerId;
 	}
@@ -38,19 +36,12 @@ public class Customer {
 		this.customerName = customerName;
 	}
 
-	public String getEmail() {
-		return email;
-	}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public Customer(int customerId, String customerName, String email) {
+	public Customer(int customerId, String customerName) {
 		super();
 		this.customerId = customerId;
 		this.customerName = customerName;
-		this.email = email;
+		
 	}
 
 	public Customer() {
