@@ -1,6 +1,7 @@
 package com.rewards.api.service;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,7 +50,7 @@ public class RewardServiceImpl {
 
 			int points = calculatePoints(t.getAmount());
 
-			String month = t.getTransactionDate().getMonth().toString();
+			String month = t.getTransactionDate().format(DateTimeFormatter.ofPattern("MMM-yyyy"));
 
 			monthlyRewards.put(month, monthlyRewards.getOrDefault(month, 0) + points);
 
