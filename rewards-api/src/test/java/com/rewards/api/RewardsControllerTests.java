@@ -22,6 +22,7 @@ import com.rewards.api.service.RewardServiceImpl;
 
 @WebMvcTest(RewardController.class)
 class RewardsControllerTests {
+
 	@Autowired
 	private MockMvc mockMvc;
 
@@ -30,7 +31,7 @@ class RewardsControllerTests {
 	private RewardServiceImpl rewardService;
 
 	@Test
-	void customernotFoundTest() throws Exception {
+	void calculateRewards_whenCustomerNotFound_thenReturnNotFound() throws Exception {
 
 		Mockito.when(rewardService.calculateRewards(99, null, null, null))
 				.thenThrow(new RewardException(ErrorCode.CUSTOMER_NOT_FOUND));
@@ -41,7 +42,7 @@ class RewardsControllerTests {
 	}
 
 	@Test
-	void noTransactionfoundTest() throws Exception {
+	void calculateRewards_whenNoTransactionsFound_thenReturnNotFound() throws Exception {
 
 		Mockito.when(rewardService.calculateRewards(1, null, null, null))
 				.thenThrow(new RewardException(ErrorCode.NO_TRANSACTION_FOUND));
@@ -52,7 +53,7 @@ class RewardsControllerTests {
 	}
 
 	@Test
-	void invalidmonthTest() throws Exception {
+	void calculateRewards_whenInvalidMonth_thenReturnBadRequest() throws Exception {
 
 		Mockito.when(rewardService.calculateRewards(1, 13, null, null))
 				.thenThrow(new RewardException(ErrorCode.INVALID_MONTH));
@@ -63,7 +64,7 @@ class RewardsControllerTests {
 	}
 
 	@Test
-	void invalidStartDateTest() throws Exception {
+	void calculateRewards_whenInvalidDateRange_thenReturnBadRequest() throws Exception {
 
 		Mockito.when(rewardService.calculateRewards(1, null, LocalDate.of(2026, 3, 3), LocalDate.of(2026, 2, 2)))
 				.thenThrow(new RewardException(ErrorCode.INVALID_DATE));
@@ -75,7 +76,7 @@ class RewardsControllerTests {
 	}
 
 	@Test
-	void successTest() throws Exception {
+	void calculateRewards_whenValidRequest_thenReturnSuccess() throws Exception {
 
 		RewardResponse response = new RewardResponse();
 		response.setCustomerId(1);
