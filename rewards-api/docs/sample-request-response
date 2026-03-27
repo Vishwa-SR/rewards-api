@@ -1,0 +1,172 @@
+============================================================
+                REWARDS API - TEST SCENARIOS
+============================================================
+
+BASE URL:
+http://localhost:8080/rewards/{customerId}
+
+
+------------------------------------------------------------
+1. HAPPY PATH (DEFAULT - LAST 3 MONTHS)
+------------------------------------------------------------
+Request:
+GET /rewards/1
+
+Response:
+{
+    "customerId": 1,
+    "customerName": "Vishwa",
+    "monthlyRewards": {
+        "Jan-2026": 395.8,
+        "Feb-2026": 497.7
+    },
+    "totalRewards": 893.5
+}
+
+
+------------------------------------------------------------
+2. HAPPY PATH (USING MONTHS)
+------------------------------------------------------------
+Request:
+GET /rewards/1?months=3
+
+Response:
+{
+    "customerId": 1,
+    "customerName": "Vishwa",
+    "monthlyRewards": {
+        "Jan-2026": 395.8,
+        "Feb-2026": 497.7
+    },
+    "totalRewards": 893.5
+}
+
+
+------------------------------------------------------------
+3. HAPPY PATH (USING DATE RANGE)
+------------------------------------------------------------
+Request:
+GET /rewards/1?startDate=2026-01-01&endDate=2026-03-01
+
+Response:
+{
+    "customerId": 1,
+    "customerName": "Vishwa",
+    "monthlyRewards": {
+        "Jan-2026": 395.8,
+        "Feb-2026": 497.7
+    },
+    "totalRewards": 893.5
+}
+
+
+------------------------------------------------------------
+4. INVALID MONTHS
+------------------------------------------------------------
+Request:
+GET /rewards/1?months=13
+
+Response:
+{
+    "errorMessage": "Invalid months value: 13. It should be between 1 and 12",
+    "errorCode": 400,
+    "timestamp": "2026-03-24T21:41:46.6400018"
+}
+
+
+------------------------------------------------------------
+5. INVALID DATE RANGE
+------------------------------------------------------------
+Request:
+GET /rewards/1?startDate=2026-03-03&endDate=2026-02-02
+
+Response:
+{
+    "errorMessage": "Invalid date range: startDate (2026-03-03) must be before endDate (2026-02-02)",
+    "errorCode": 400,
+    "timestamp": "2026-03-24T21:42:20.5707908"
+}
+
+------------------------------------------------------------
+6. ONLY START DATE PROVIDED
+------------------------------------------------------------
+Request:
+GET /rewards/1?startDate=2026-01-01
+
+Response:
+{
+    "errorMessage": "Invalid request: Both startDate and endDate must be provided together",
+    "errorCode": 400,
+    "timestamp": "2026-03-24T21:42:45.658274"
+}
+
+------------------------------------------------------------
+7. ONLY END DATE PROVIDED
+------------------------------------------------------------
+Request:
+GET /rewards/1?endDate=2026-01-01
+
+Response:
+{
+    "errorMessage": "Invalid request: Both startDate and endDate must be provided together",
+    "errorCode": 400,
+    "timestamp": "2026-03-24T21:43:25.8258743"
+}
+
+------------------------------------------------------------
+8. MONTHS + START DATE (INVALID COMBINATION)
+------------------------------------------------------------
+Request:
+GET /rewards/1?months=3&startDate=2026-01-01
+
+Response:
+{
+    "errorMessage": "Invalid request: Provide either 'months' OR 'startDate & endDate', not both",
+    "errorCode": 400,
+    "timestamp": "2026-03-24T21:43:56.5879505"
+}
+
+
+------------------------------------------------------------
+9. MONTHS + END DATE (INVALID COMBINATION)
+------------------------------------------------------------
+Request:
+GET /rewards/1?months=3&endDate=2026-01-01
+
+Response:
+{
+    "errorMessage": "Invalid request: Provide either 'months' OR 'startDate & endDate', not both",
+    "errorCode": 400,
+    "timestamp": "2026-03-24T21:44:27.2327328"
+}
+
+------------------------------------------------------------
+10. CUSTOMER NOT FOUND
+------------------------------------------------------------
+Request:
+GET /rewards/99
+
+Response:
+{
+    "errorMessage": "Customer not found for customerId: 99",
+    "errorCode": 404,
+    "timestamp": "2026-03-24T21:44:54.8238071"
+}
+
+
+------------------------------------------------------------
+11. NO TRANSACTIONS FOUND
+------------------------------------------------------------
+Request:
+GET /rewards/1?startDate=2020-01-01&endDate=2020-02-01
+
+Response:
+{
+    "errorMessage": "No transactions found for customerId: 1 in the given date range",
+    "errorCode": 404,
+    "timestamp": "2026-03-24T21:45:26.8275443"
+}
+
+============================================================
+                    END OF DOCUMENT
+============================================================
